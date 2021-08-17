@@ -1,6 +1,9 @@
 class Model {
 	constructor() {
-		
+		this.todos = [
+			{id:1, title:'Find work', done:false},
+			{id:2, title:'Make dinner', done:false}
+		]		
 	}
 }
 
