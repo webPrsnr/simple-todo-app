@@ -5,6 +5,14 @@ class Model {
 			{id:2, title:'Make dinner', done:false}
 		]		
 	}
+	addTodo(title) {
+		const todo = {
+			id : this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1 : 1,
+			title : title,
+			done: false
+		}
+		this.todos.push(todo)
+	}
 }
 
 class View {
