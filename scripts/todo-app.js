@@ -23,7 +23,7 @@ class Model {
 	}
 
 	deleteTodo(id) {
-		this.todos.forEach((el, index) => el.id === id ? this.todos.splice(el.id - 1, 1) : el)
+		this.todos.forEach((el, index) => el.id === id ? this.todos.splice(index, 1) : el)
 
 		this.onTodoListChanged(this.todos)
 	}
