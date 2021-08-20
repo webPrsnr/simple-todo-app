@@ -20,6 +20,9 @@ class Model {
 		this.todos.forEach((el) => el.id === id ? this.todos.splice(el.id - 1, 1) : el)
 	}
 
+	toggleTodo(id){
+		this.todos.forEach((el)=> el.id === id ? el.done = !el.done : el)
+	}
 }
 
 class View {

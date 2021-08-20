@@ -47,3 +47,13 @@ test('`deleteTodo` method of `Model`', (t) => {
 	app.todos = []
 	t.end()
 })
+
+test('`toggleTodo` method of `Model`', (t) => {
+	const app = initApp.app.model
+	app.addTodo('Sell books')
+	const expected = {id:1, title:'Sell books', done:true}
+	app.toggleTodo(1)
+	t.deepEqual(app.todos[0], expected, '`toggleTodo` method is success')
+	app.todos = []
+	t.end()	
+})
