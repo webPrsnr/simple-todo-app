@@ -30,6 +30,7 @@ class Model {
 
 	toggleTodo(id){
 		this.todos.forEach((el)=> el.id === id ? el.done = !el.done : el)
+		this.onTodoListChanged(this.todos)
 	}
 }
 
@@ -144,6 +145,15 @@ class View {
 			
 		})
 	}
+
+	bindToggleTodo(handler) {
+		this.todoList.addEventListener('change', event => {
+			if (event.target.type === 'checkbox') {
+				const id = parseInt(event.target.parentElement.id)
+				handler(id)
+			}
+		})
+	}
 }
 
 class Controller {
@@ -153,7 +163,8 @@ class Controller {
 
 		this.view.bindAddTodo(this.handleAddTodo)
 		this.view.bindDeleteTodo(this.handleDeleteTodo)
-		
+		this.view.bindToggleTodo(this.handleToggleTodo)
+				
 		//display todos
 		this.onTodoListChanged(this.model.todos)
 
@@ -171,6 +182,10 @@ class Controller {
 
 	handleDeleteTodo = (id) => {
 		this.model.deleteTodo(id)
+	}
+
+	handleToggleTodo = (id) => {
+		this.model.toggleTodo(id)
 	}
 }
 
