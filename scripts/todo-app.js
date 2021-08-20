@@ -23,7 +23,9 @@ class Model {
 	}
 
 	deleteTodo(id) {
-		this.todos.forEach((el) => el.id === id ? this.todos.splice(el.id - 1, 1) : el)
+		this.todos.forEach((el, index) => el.id === id ? this.todos.splice(el.id - 1, 1) : el)
+
+		this.onTodoListChanged(this.todos)
 	}
 
 	toggleTodo(id){
@@ -132,6 +134,16 @@ class View {
 	    }
 	  })
 	}
+
+	bindDeleteTodo(handler) {
+		this.todoList.addEventListener('click', event => {
+			if (event.target.className === 'delete') {
+				const id = parseInt(event.target.parentElement.id)
+				handler(id)
+			}
+			
+		})
+	}
 }
 
 class Controller {
@@ -140,6 +152,7 @@ class Controller {
 		this.view = view
 
 		this.view.bindAddTodo(this.handleAddTodo)
+		this.view.bindDeleteTodo(this.handleDeleteTodo)
 		
 		//display todos
 		this.onTodoListChanged(this.model.todos)
@@ -156,7 +169,9 @@ class Controller {
 		this.model.addTodo(todoText)
 	}
 
-	handle
+	handleDeleteTodo = (id) => {
+		this.model.deleteTodo(id)
+	}
 }
 
 const app = new Controller(new Model(), new View())
