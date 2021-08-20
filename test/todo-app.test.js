@@ -38,3 +38,12 @@ test('`editTodo` method of `Model`', (t) => {
 	t.end()	
 })
 
+test('`deleteTodo` method of `Model`', (t) => {
+	const app = initApp.app.model
+	app.addTodo('Buy new laptop')
+	t.equal(app.todos.length, 1, '`app.todos.length` is 1')
+	app.deleteTodo(1)
+	t.equal(app.todos.length, 0, '`deleTodo` method is success')
+	app.todos = []
+	t.end()
+})

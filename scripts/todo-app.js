@@ -15,6 +15,11 @@ class Model {
 	editTodo(id, title) {
 		this.todos.forEach((el)=> el.id === id ? el.title = title : el)
 	}
+
+	deleteTodo(id) {
+		this.todos.forEach((el) => el.id === id ? this.todos.splice(el.id - 1, 1) : el)
+	}
+
 }
 
 class View {
