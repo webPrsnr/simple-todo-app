@@ -1,10 +1,8 @@
 class Model {
 	constructor() {
-		this.todos = [
-			{id:1, title:'Find work', done:false},
-			{id:2, title:'Make dinner', done:false}
-		]		
+		this.todos = []		
 	}
+	
 	addTodo(title) {
 		const todo = {
 			id : this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1 : 1,
@@ -12,6 +10,10 @@ class Model {
 			done: false
 		}
 		this.todos.push(todo)
+	}
+
+	editTodo(id, title) {
+		this.todos.forEach((el)=> el.id === id ? el.title = title : el)
 	}
 }
 

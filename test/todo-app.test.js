@@ -19,11 +19,22 @@ test('todo `Model` (Object) has desired key', (t) => {
 
 test('`addTodo` method of `Model`', (t)=>{
 	const app = initApp.app.model
-	t.equal(app.todos.length, 2, 'initial model.todos.length is 2')
+	t.equal(app.todos.length, 0, 'initial model.todos.length is 0')
 	app.addTodo('Go shopping')
-	t.equal(app.todos.length, 3, 'updated model.todos.length is 3')
-	const expected = {id:3, title:'Go shopping', done:false}
-	t.deepEqual(app.todos[2], expected, 'todo list item added')
+	t.equal(app.todos.length, 1, 'updated model.todos.length is 1')
+	const expected = {id:1, title:'Go shopping', done:false}
+	t.deepEqual(app.todos[0], expected, 'todo list item added')
+	app.todos = []
 	t.end()
-	
 })
+
+test('`editTodo` method of `Model`', (t) => {
+	const app = initApp.app.model
+	app.addTodo('Buy milk')
+	const expected = {id:1, title:'Buy chocolate', done:false}
+	app.editTodo(1, 'Buy chocolate')
+	t.deepEqual(app.todos[0], expected, 'todo single item edited')
+	app.todos = []
+	t.end()	
+})
+
