@@ -61,6 +61,27 @@ class View {
 		const element = document.querySelector(selector)
 		return element
 	}
+
+	get _todoText() {
+		return this.input.value
+	}
+
+	_resetInput() {
+		this.input.value = ''
+	}
+
+	displayTodos(todos) {
+		// Delete all nodes
+		while (this.todoList.firstChild) {
+			this.todoList.removeChild(this.todoList.firstChild)
+		}
+
+		if(todos.length == 0) {
+			const p = this.createElement('p')
+			p.textContent = 'Please add a task.'
+			this.todoList.append(p)
+		}
+	}
 }
 
 class Controller {
