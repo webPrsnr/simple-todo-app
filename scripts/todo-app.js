@@ -80,6 +80,39 @@ class View {
 			const p = this.createElement('p')
 			p.textContent = 'Please add a task.'
 			this.todoList.append(p)
+		} else {
+			todos.forEach((el) => {
+				const li = this.createElement('li')
+				li.id = el.id
+
+				//checkbox
+				const checkbox = this.createElement('input')
+				checkbox.type = 'checkbox'
+				checkbox.checked = el.done
+
+				//span
+				const span = this.createElement('span')
+				span.contentEditable = true
+				span.classList.add('editable')
+
+				//strike
+				if (el.done) {
+					const strike = this.createElement('s')
+					strike.textContent = el.title
+					span.append(strike)
+				} else {
+					span.textContent = el.title
+				}
+
+				//delete button
+				const deleteButton = this.createElement('button', 'delete') 
+				deleteButton.textContent = 'Delete'
+				li.append(checkbox, span, deleteButton)
+
+				//append nodes
+				this.todoList.append(li)
+				
+			})
 		}
 	}
 }
