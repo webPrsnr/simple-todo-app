@@ -2,6 +2,10 @@ class Model {
 	constructor() {
 		this.todos = []		
 	}
+
+	bindTodoListChanged(callback) {
+	  this.onTodoListChanged = callback
+	}
 	
 	addTodo(title) {
 		const todo = {
@@ -10,6 +14,8 @@ class Model {
 			done: false
 		}
 		this.todos.push(todo)
+
+		this.onTodoListChanged(this.todos)
 	}
 
 	editTodo(id, title) {
@@ -115,6 +121,17 @@ class View {
 			})
 		}
 	}
+
+	bindAddTodo(handler) {
+	  this.form.addEventListener('submit', event => {
+	    event.preventDefault()
+	
+	    if (this._todoText) {
+	      handler(this._todoText)
+	      this._resetInput()
+	    }
+	  })
+	}
 }
 
 class Controller {
@@ -122,13 +139,24 @@ class Controller {
 		this.model = model
 		this.view = view
 
+		this.view.bindAddTodo(this.handleAddTodo)
+		
 		//display todos
 		this.onTodoListChanged(this.model.todos)
+
+		//model
+		this.model.bindTodoListChanged(this.onTodoListChanged)
 	}
 
 	onTodoListChanged = (todos) => {
 		this.view.displayTodos(todos)
 	}
+
+	handleAddTodo = (todoText) => {
+		this.model.addTodo(todoText)
+	}
+
+	handle
 }
 
 const app = new Controller(new Model(), new View())
