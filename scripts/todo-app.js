@@ -1,10 +1,15 @@
 class Model {
 	constructor() {
-		this.todos = []		
+		this.todos = JSON.parse(localStorage.getItem('todos')) || []		
 	}
 
 	bindTodoListChanged(callback) {
-	  this.onTodoListChanged = callback
+		this.onTodoListChanged = callback
+	}
+
+	_commit(todos) {
+	  this.onTodoListChanged(todos)
+	  localStorage.setItem('todos', JSON.stringify(todos))
 	}
 	
 	addTodo(title) {
@@ -15,22 +20,24 @@ class Model {
 		}
 		this.todos.push(todo)
 
-		this.onTodoListChanged(this.todos)
+		this._commit(this.todos)
 	}
 
 	editTodo(id, title) {
 		this.todos.forEach((el)=> el.id === id ? el.title = title : el)
+		this._commit(this.todos)
 	}
 
 	deleteTodo(id) {
 		this.todos.forEach((el, index) => el.id === id ? this.todos.splice(index, 1) : el)
+		this._commit(this.todos)
 
-		this.onTodoListChanged(this.todos)
 	}
 
 	toggleTodo(id){
 		this.todos.forEach((el)=> el.id === id ? el.done = !el.done : el)
-		this.onTodoListChanged(this.todos)
+		this._commit(this.todos)
+		
 	}
 }
 
